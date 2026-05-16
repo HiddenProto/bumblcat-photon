@@ -95,7 +95,9 @@ export default {
     const forwardedHeaders = [];
 
     for (const [k, v] of upstream.headers) {
-      if (HOP_BY_HOP.has(k.toLowerCase())) continue;
+      const lk = k.toLowerCase();
+      if (HOP_BY_HOP.has(lk)) continue;
+      if (lk.startsWith("access-control-")) continue; // never let upstream override our CORS headers
       respHeaders.set(k, v);
       forwardedHeaders.push([k, v]);
     }

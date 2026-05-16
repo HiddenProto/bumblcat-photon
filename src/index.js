@@ -13,6 +13,8 @@ const CORS = {
 const HOP_BY_HOP = new Set([
   "connection", "keep-alive", "proxy-authenticate", "proxy-authorization",
   "te", "trailers", "transfer-encoding", "upgrade", "proxy-connection",
+  // Cloudflare auto-decompresses bodies; forwarding these would lie about encoding
+  "content-encoding", "content-length",
 ]);
 
 function isPrivate(hostname) {

@@ -71,10 +71,9 @@ export default {
 
     const upstreamHeaders = new Headers();
     for (const [k, v] of Object.entries(reqHeadersRaw)) {
-      if (!HOP_BY_HOP.has(k.toLowerCase())) upstreamHeaders.set(k, v);
+      const lk = k.toLowerCase();
+      if (!HOP_BY_HOP.has(lk) && lk !== "host") upstreamHeaders.set(k, v);
     }
-    // Always set Host to match target
-    upstreamHeaders.set("Host", targetURL.host);
 
     // ── Upstream fetch ─────────────────────────────────────────────────────
     let upstream;
